@@ -4,6 +4,17 @@ A native macOS app (SwiftUI) that does what TestDisk and PhotoRec do, with a GUI
 partitions, rebuild the partition table, repair boot sectors, browse and undelete files, and carve files out of raw space.
 No third-party code or dependencies.
 
+## Download
+
+Grab **DiskRecover.zip** from the [latest release](https://github.com/ygb4520-cmd/disk-recover/releases/latest), unzip it, and drag
+`DiskRecover.app` to Applications. It is a universal app (Apple Silicon and Intel), macOS 14+.
+
+The app is not notarized by Apple, so macOS blocks it the first time. Either right-click it ▸ **Open** ▸ **Open**, or run:
+
+```
+xattr -dr com.apple.quarantine /Applications/DiskRecover.app
+```
+
 ## Building
 
 ```
