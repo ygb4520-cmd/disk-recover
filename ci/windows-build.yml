@@ -1,0 +1,26 @@
+# Move this file to .github/workflows/windows-build.yml to enable it (kept outside .github by the automation).
+name: Windows build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  drcli-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: compnerd/gha-setup-swift@main
+        with:
+          branch: swift-6.0-release
+          tag: 6.0-RELEASE
+      - name: Build drcli
+        run: swift build -c release --product drcli
+      - name: Smoke test
+        run: .build\release\drcli.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: drcli-windows
+          path: .build/release/drcli.exe

@@ -1,3 +1,4 @@
+#if !os(Windows)
 import Foundation
 
 public struct DiskInfo: Identifiable, Hashable {
@@ -75,3 +76,4 @@ public enum DiskEnumerator {
         }
     }
 }
+#endif

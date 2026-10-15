@@ -88,6 +88,7 @@ public enum Extractor {
     }
 }
 
+#if !os(Windows)
 /// Works out whether a destination folder lives on the disk being recovered (writing there can destroy the very data you want back).
 public enum DestinationCheck {
     public static func isOnDisk(url: URL, wholeDisk bsd: String) -> Bool {
@@ -127,3 +128,4 @@ public enum DestinationCheck {
         return (try? PropertyListSerialization.propertyList(from: data, format: nil)) as? [String: Any]
     }
 }
+#endif

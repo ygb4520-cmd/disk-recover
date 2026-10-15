@@ -1,3 +1,4 @@
+#if !os(Windows)
 import Foundation
 import CSupport
 
@@ -181,3 +182,4 @@ public final class HelperClient: @unchecked Sendable {
         return try DiskSource(fd: fd, path: path, writable: writable)
     }
 }
+#endif

@@ -1,5 +1,7 @@
 import Foundation
+#if !os(Windows)
 import CSupport
+#endif
 
 public enum DiskError: LocalizedError {
     case openFailed(path: String, errno: Int32)
@@ -27,6 +29,7 @@ public enum DiskError: LocalizedError {
     }
 }
 
+#if !os(Windows)
 /// A random-access, sector-aware view of a raw device or a disk-image file.
 /// Reads are always clamped to the end of the source and, for raw devices, expanded to whole sectors.
 public final class DiskSource: @unchecked Sendable {
@@ -154,3 +157,4 @@ public final class DiskSource: @unchecked Sendable {
 
     public func flush() { _ = cs_full_fsync(fd) }
 }
+#endif

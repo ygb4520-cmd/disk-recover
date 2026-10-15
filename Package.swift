@@ -1,6 +1,17 @@
 // swift-tools-version:5.9
 import PackageDescription
 
+// Windows (phase 1): only the core library and the drcli command-line tool, working on disk-image files.
+#if os(Windows)
+let package = Package(
+    name: "DiskRecover",
+    products: [.executable(name: "drcli", targets: ["drcli"])],
+    targets: [
+        .target(name: "DiskRecoverCore", path: "Sources/DiskRecoverCore"),
+        .executableTarget(name: "drcli", dependencies: ["DiskRecoverCore"], path: "Sources/drcli"),
+    ]
+)
+#else
 let package = Package(
     name: "DiskRecover",
     platforms: [.macOS(.v14)],
@@ -20,3 +31,4 @@ let package = Package(
         .testTarget(name: "DiskRecoverCoreTests", dependencies: ["DiskRecoverCore"], path: "Tests/DiskRecoverCoreTests"),
     ]
 )
+#endif

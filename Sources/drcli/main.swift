@@ -5,7 +5,9 @@ import DiskRecoverCore
 
 func die(_ m: String) -> Never { FileHandle.standardError.write(Data((m + "\n").utf8)); exit(1) }
 
+#if !os(Windows)
 if CommandLine.arguments.contains("--helper") { HelperServer.run(arguments: CommandLine.arguments) }
+#endif
 let args = Array(CommandLine.arguments.dropFirst())
 guard let cmd = args.first else {
     print("""
@@ -22,6 +24,7 @@ guard let cmd = args.first else {
     """)
     exit(0)
 }
+#if !os(Windows)
 if cmd == "helper-test" {
     // Exercise the fd-passing helper without an admin prompt: ask it to open a file, then read through the descriptor.
     guard args.count >= 2 else { die("usage: drcli helper-test FILE") }
@@ -36,6 +39,7 @@ if cmd == "helper-test" {
     } catch { die("helper test failed: \(error.localizedDescription)") }
     exit(0)
 }
+#endif
 guard args.count >= 2 else { die("missing disk/image path") }
 let path = args[1]
 func opt(_ name: String) -> String? { if let i = args.firstIndex(of: name), i + 1 < args.count { return args[i + 1] }; return nil }
